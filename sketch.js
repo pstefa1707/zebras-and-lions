@@ -2,7 +2,7 @@ var MAX_HEALTH = 80;
 var ZEBRA_REPRODUCTION_RATE = 1.5;
 var CELL_SIZE = 8; // 0 for every pixel
 
-
+var yCount = 0;
 var zCount = 0;
 var lCount = 0;
 var cellArray = {};
@@ -11,6 +11,7 @@ var GRID_HEIGHT;
 var GRID_WIDTH;
 
 function setup() {
+  smooth();
   frameRate(60);
   GRID_WIDTH = windowWidth/CELL_SIZE;
   GRID_HEIGHT = windowHeight/CELL_SIZE;
@@ -32,17 +33,21 @@ function draw() {
   background(color("green"));
   forEachCell(step);
   drawArr();
-  var txt = "Lions: " + lCount + "\nZebras: " + zCount;
+  drawText();
+}
+
+function drawText() {
+  var txt = "Lions: " + lCount + "\nZebras: " + zCount + "\n\nYear: " + yCount;
   push();
   stroke(0);
-  fill(0);
+  strokeWeight(CELL_SIZE/2);
+  fill(255);
   textAlign(LEFT, TOP);
   text(txt, 0, 0);
   textAlign(RIGHT, BOTTOM);
   text("FPS: " + round(frameRate()), GRID_WIDTH*CELL_SIZE, GRID_HEIGHT*CELL_SIZE)
   pop();
 }
-
 function getCellIndex(x, y) {
   var index = x + (y * (GRID_WIDTH));
   return index;
@@ -70,6 +75,7 @@ function drawPixel() {
 }
 
 function drawArr() {
+  yCount ++;
   switch (CELL_SIZE){
     case 0:
       drawPixel();
